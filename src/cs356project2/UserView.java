@@ -51,7 +51,9 @@ public class UserView extends JFrame{
     
     private JLabel followDescription;
     private JLabel tweetDescription;
-    private JLabel nameLabel;
+    private JLabel creationTimeLabel;
+    private JLabel lastUpdateTimeLabel;
+    
     
     public UserView(User u){
         this.user=u;
@@ -93,6 +95,7 @@ public class UserView extends JFrame{
     //adds a tweet to the top of the display
     public void updateNewsFeedView(Tweet t){
         userNewsFeedPanel.addTweetToTop(t);
+        lastUpdateTimeLabel.setText("LastUpdate: " + user.getLastUpdateTime());
     }
     
     
@@ -132,7 +135,8 @@ public class UserView extends JFrame{
         tweetButton = new JButton("Post tweet");
         followDescription = new JLabel("Follow");
         tweetDescription = new JLabel("tweet here");
-        nameLabel = new JLabel("Welcome " + user.getUserName() + "!");
+        creationTimeLabel = new JLabel(user.getUserName() + " created at " + user.getCreationTime());
+        lastUpdateTimeLabel = new JLabel("LastUpdate: " + user.getLastUpdateTime());
         
         //set action listeners
         addFollowerTextField.addKeyListener(new FollowTextFieldListener());
@@ -160,7 +164,8 @@ public class UserView extends JFrame{
         tweetPanel.add(tweetDescription);
         tweetPanel.add(tweetTextField);
         tweetPanel.add(tweetButton);
-        userInfoPanel.add(nameLabel);
+        userInfoPanel.add(creationTimeLabel);
+        userInfoPanel.add(lastUpdateTimeLabel);
         
         mainPanel.add(userInfoPanel);
         mainPanel.add(followPanel);

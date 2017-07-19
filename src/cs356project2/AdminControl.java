@@ -27,10 +27,12 @@ import users.AbstractUser;
 import users.CountGroupsVisitor;
 import users.CountMessagesVisitor;
 import users.CountUsersVisitor;
+import users.FindLastUpdatedUserVisitor;
 import users.Group;
 import users.OpenUserViewVisitor;
 import users.PositivePercentageVisitor;
 import users.User;
+import users.ValidVisitor;
 
 public class AdminControl extends JFrame{
 
@@ -95,7 +97,7 @@ public class AdminControl extends JFrame{
     }
     
     
-    //returns the singleton intence
+    //returns the singleton instance
     public static AdminControl getInstance() {
         if(instance==null)
             instance = new AdminControl();
@@ -129,6 +131,18 @@ public class AdminControl extends JFrame{
         PositivePercentageVisitor visitor = new PositivePercentageVisitor();
         treeViewPanel.getRootGroup().accept(visitor);
         return visitor.getPercentage();
+    }
+    
+    public boolean checkNameValidity(){
+        ValidVisitor visitor = new ValidVisitor();
+        treeViewPanel.getRootGroup().accept(visitor);
+        return visitor.getResult();
+    }
+    
+    public AbstractUser getLastUpdatedUser(){
+        FindLastUpdatedUserVisitor visitor = new FindLastUpdatedUserVisitor();
+        treeViewPanel.getRootGroup().accept(visitor);
+        return visitor.getLatestUser();
     }
     
     
@@ -202,8 +216,6 @@ public class AdminControl extends JFrame{
             String text = addUserTextField.getText();
             if(text.equals("")){
                 addUserButton.setEnabled(false);
-            }else if(treeViewPanel.containsAbstractUser(text)){
-                addUserButton.setEnabled(false);
             }else{
                 addUserButton.setEnabled(true);
             }
@@ -229,8 +241,6 @@ public class AdminControl extends JFrame{
         public void keyReleased(KeyEvent e) {
             String text = addGroupTextField.getText();
             if(text.equals("")){
-                addGroupButton.setEnabled(false);
-            }else if(treeViewPanel.containsAbstractUser(text)){
                 addGroupButton.setEnabled(false);
             }else{
                 addGroupButton.setEnabled(true);

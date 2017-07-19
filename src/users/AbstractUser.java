@@ -18,6 +18,7 @@ public abstract class AbstractUser implements Subject, Observer{
     private final List<Subject> subscriptions;
     private final List<Observer> observers;
     private DefaultMutableTreeNode node;//the node that the user belongs to in the tree
+    private final long creationTime;
     
     //constructor
     public AbstractUser(String userName){
@@ -26,6 +27,7 @@ public abstract class AbstractUser implements Subject, Observer{
         subscriptions = new LinkedList<>();
         observers = new LinkedList<>();
         node = null;
+        creationTime = System.currentTimeMillis();
     }
     
     //sets the reference to this user's node. this is not intended to change, but trying to
@@ -43,6 +45,13 @@ public abstract class AbstractUser implements Subject, Observer{
     //gets the username
     public String getUserName() {
         return userName;
+    }
+    
+    /**
+     * @return the creationTime
+     */
+    public final long getCreationTime() {
+        return creationTime;
     }
     
     //returns the list of all the subjects the user is subscribed to
@@ -111,5 +120,7 @@ public abstract class AbstractUser implements Subject, Observer{
     public int hashCode(){
         return userName.hashCode();
     }
+
+    
     
 }

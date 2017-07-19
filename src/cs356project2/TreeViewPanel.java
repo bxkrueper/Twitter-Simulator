@@ -67,10 +67,6 @@ public class TreeViewPanel extends JPanel{
     //adds the user to the tree
     //returns whether or not the addition was sucsessful
     public boolean addAbstractUser(AbstractUser u){
-        if(containsAbstractUser(u)){
-            return false;
-        }
-        
         //makes the node for the user and gives it a refrence to the node
 	DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(u);
         u.setNode(childNode);
